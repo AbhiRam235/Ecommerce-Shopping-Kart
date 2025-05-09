@@ -49,13 +49,13 @@ def add_cart(request, product_id):
             item = CartItem.objects.get(product=product, id=item_id)
             item.quantity += 1
             item.save()
-        else:
+        else:#When the product is in the cart, but the variation combo is new
             item = CartItem.objects.create(product=product, quantity=1, cart=cart)
             if len(product_variation)>0:
                 item.variations.clear()
                 item.variations.add(*product_variation)
             item.save()
-    else:
+    else:#When the product is not in the cart at all
         cart_item = CartItem.objects.create(
             product = product,
             quantity = 1,
