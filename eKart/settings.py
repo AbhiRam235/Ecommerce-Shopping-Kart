@@ -75,7 +75,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'eKart.wsgi.application'
 
-AUTH_USER_MODEL = 'accounts.Account'
+AUTH_USER_MODEL = 'accounts.Account'# for custom model
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
@@ -136,8 +136,13 @@ STATICFILES_DIRS = [
     'eKart/static',
 ]
 
-
 # media files configuration
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+
+from django.contrib.messages import constants as messages
+
+MESSAGE_TAGS = {
+    messages.ERROR : 'danger',
+}
