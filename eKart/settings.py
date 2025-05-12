@@ -146,3 +146,16 @@ from django.contrib.messages import constants as messages
 MESSAGE_TAGS = {
     messages.ERROR : 'danger',
 }
+
+from decouple import config
+
+EMAIL_HOST_USER = config('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
+
+# SMTP configuration
+
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = '22pa1a4571@gmail.com'
+EMAIL_HOST_PASSWORD = 'luai fncg mboe ywhl'
+EMAIL_USE_TLS = True
