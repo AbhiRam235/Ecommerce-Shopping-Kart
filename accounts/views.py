@@ -14,6 +14,7 @@ from django.utils.encoding import force_bytes
 from django.contrib.auth.tokens import default_token_generator
 from django.core.mail import EmailMessage
 
+import requests
 # Create your views here.
 
 def register(request):
@@ -97,7 +98,15 @@ def login(request):
 
             auth.login(request, user)
             messages.success(request, 'You are now logged in.')
-            return redirect('dashboard')
+            url = request.META.get('HTTP_REFERER') #url = 'http://example.com/login?next=/cart/checkout'
+            try:
+                query = requests.utils.urlparse(url).query #query = 'next=/cart/checkout'
+                params = dict(x.split('=') for x in query.split('&')) #{'next': '/cart/checkout'}
+                if 'next' in params:
+                    nextPage = params['next']
+                    return redirect(nextPage)
+            except:
+                return redirect('dashboard')
         else:
             messages.error(request, 'Invalid login credentials')
             return redirect('login')
