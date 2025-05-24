@@ -60,6 +60,8 @@ ul.thumb li img{
   border: 1px solid grey;
 }
 
-.rating-star i{
-  color: #ffb503 !important;
+ul.thumb li img.active-thumb {
+  border: 3px solid rgb(118, 219, 235);
+  box-shadow: 0 0 15px 5px rgba(165, 236, 124, 0.6);
+  transition: all 0.3s ease-in-out;
 }

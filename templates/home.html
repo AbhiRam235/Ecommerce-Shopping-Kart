@@ -34,6 +34,23 @@
 				<a href="{{ product.get_url }}" class="title">{{ product.product_name }}</a>
 				<div class="price mt-1">{{ product.price }}</div> <!-- price-wrap.// -->
 			</figcaption>
+			<div class="rating-star">
+			<span>
+				{% for i in "12345" %}
+					{% with star=forloop.counter %}
+						<i class="fa 
+							{% if product.averageReview >= star %}
+								fa-star
+							{% elif product.averageReview >= star|add:'-0.5' %}
+								fa-star-half-o
+							{% else %}
+								fa-star-o
+							{% endif %}"
+						aria-hidden="true"></i>
+					{% endwith %}
+				{% endfor %}
+			</span>
+		</div>
 		</div>
 	</div> <!-- col.// -->
 	{% endfor %}
