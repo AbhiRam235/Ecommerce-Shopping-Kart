@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 import os
+import dj_database_url
 from pathlib import Path
 from decouple import config
 from django.contrib.messages import constants as messages
@@ -22,11 +23,10 @@ BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = config('SECRET_KEY')
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = config('DEBUG', cast=bool)
+
 
 ALLOWED_HOSTS = ['.vercel.app']
 
@@ -91,7 +91,7 @@ DATABASES = {
         }
     }
 
-
+DATABASES["default"] = dj_database_url.parse("postgresql://ekart_django_user:jpgCMnkkuyUvvREGRlkGUQs9Nl7dJO5K@dpg-d0q42b3uibrs73dkgh3g-a.oregon-postgres.render.com/ekart_django")
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
 
@@ -130,8 +130,15 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
+# Static files you are working with in development
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+]
+
+# Collected static files for production (make sure this folder is not the same as above!)
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+
 
 # media files configuration
 
@@ -144,10 +151,13 @@ MESSAGE_TAGS = {
 
 # SMTP configuration
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = config('EMAIL_HOST')
-EMAIL_PORT = config('EMAIL_PORT', cast=int)
-EMAIL_USE_TLS = config('EMAIL_USE_TLS', cast=bool)
-EMAIL_HOST_USER = config('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
+SECRET_KEY = config('SECRET_KEY', default='unsafe-dev-secret-key')
+DEBUG = config('DEBUG', default=True, cast=bool)
+EMAIL_HOST = config('EMAIL_HOST', default='smtp.gmail.com')
+EMAIL_PORT = config('EMAIL_PORT', default=587, cast=int)
+EMAIL_USE_TLS = config('EMAIL_USE_TLS', default=True, cast=bool)
+EMAIL_HOST_USER = config('EMAIL_HOST_USER', default='')
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD', default='')
+
 
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
