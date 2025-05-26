@@ -28,15 +28,27 @@ def register(request):
             email = form.cleaned_data['email']
             password = form.cleaned_data['password']
             username = email.split("@")[0]
-            user = Account.objects.create_user(first_name=first_name,last_name=last_name,username=username,email=email,password=password)
+
+            user = Account.objects.create_user(
+                first_name=first_name,
+                last_name=last_name,
+                username=username,
+                email=email,
+                password=password
+            )
             user.phone_number = phone_number
             user.save()
+
+            # Create UserProfile
+            profile = UserProfile()
+            profile.user = user
+            profile.save()
 
             # USER ACTIVATION
             current_site = get_current_site(request)
             mail_subject = 'Please activate your account'
             message = render_to_string('accounts/account_verification_email.html', {
-                'user':user,
+                'user': user,
                 'domain': current_site,
                 'uid': urlsafe_base64_encode(force_bytes(user.pk)),
                 'token': default_token_generator.make_token(user),
@@ -45,14 +57,15 @@ def register(request):
             send_email = EmailMessage(mail_subject, message, to=[to_email])
             send_email.send()
 
-            return redirect('/accounts/login/?command=verification&email='+email)
+            return redirect('/accounts/login/?command=verification&email=' + email)
     else:
         form = RegistrationForm()
 
     context = {
-        'form':form,
+        'form': form,
     }
     return render(request, 'accounts/register.html', context)
+
 
 def login(request):
     if request.method == 'POST':
@@ -141,12 +154,15 @@ def activate(request, uidb64, token):
 def dashboard(request):
     orders = Order.objects.order_by('-created_at').filter(user_id=request.user.id, is_ordered=True)
     orders_count = orders.count()
-    userprofile = UserProfile.objects.get(user_id=request.user.id)
+    
+    userprofile, created = UserProfile.objects.get_or_create(user=request.user)
+
     context = {
-        'orders_count' : orders_count,
-        'userprofile' : userprofile,
+        'orders_count': orders_count,
+        'userprofile': userprofile,
     }
     return render(request, 'accounts/dashboard.html', context)
+
 
 def forgotPassword(request):
     if request.method == 'POST':
