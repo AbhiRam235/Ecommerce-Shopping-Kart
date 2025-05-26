@@ -28,7 +28,8 @@ BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
 # SECURITY WARNING: don't run with debug turned on in production!
 
 
-ALLOWED_HOSTS = ['.vercel.app']
+ALLOWED_HOSTS = ['ecommerce-shopping-kart.onrender.com', '127.0.0.1', 'localhost']
+
 
 
 # Application definition
