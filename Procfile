@@ -1,1 +1,0 @@
-web gunicorn eKart.wsgi:application --log-file -

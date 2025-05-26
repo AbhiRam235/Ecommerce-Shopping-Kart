@@ -14,8 +14,6 @@ import os
 from pathlib import Path
 from decouple import config
 from django.contrib.messages import constants as messages
-import django_heroku
-import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
@@ -30,7 +28,7 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', cast=bool)
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['.vercel.app']
 
 
 # Application definition
@@ -89,7 +87,7 @@ AUTH_USER_MODEL = 'accounts.Account'# for custom model
 DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'db.sqlite3',
+            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
         }
     }
 
@@ -134,7 +132,6 @@ STATIC_URL = '/static/'
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
-django_heroku.settings(locals())
 
 # media files configuration
 
