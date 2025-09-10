@@ -28,7 +28,7 @@ BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
 # SECURITY WARNING: don't run with debug turned on in production!
 
 
-ALLOWED_HOSTS = ['ecommerce-shopping-kart.onrender.com', '127.0.0.1', 'localhost']
+ALLOWED_HOSTS = ['ecommerce-shopping-kart-lzy7.onrender.com', '127.0.0.1', 'localhost']
 
 
 
@@ -95,7 +95,8 @@ DATABASES = {
         }
     }
 
-DATABASES["default"] = dj_database_url.parse("postgresql://ekart_django_user:jpgCMnkkuyUvvREGRlkGUQs9Nl7dJO5K@dpg-d0q42b3uibrs73dkgh3g-a.oregon-postgres.render.com/ekart_django")
+DATABASES["default"] = dj_database_url.parse("postgresql://postegrese_django_ekart_user:9JmDQiSwKNAKke006TnHlR7V0U5Kz63a@dpg-d30oe915pdvs73893of0-a.oregon-postgres.render.com/postegrese_django_ekart")
+
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
 
