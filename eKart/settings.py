@@ -15,6 +15,9 @@ import dj_database_url
 from pathlib import Path
 from decouple import config
 from django.contrib.messages import constants as messages
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
@@ -28,7 +31,7 @@ BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
 # SECURITY WARNING: don't run with debug turned on in production!
 
 
-ALLOWED_HOSTS = ['ecommerce-shopping-kart-lzy7.onrender.com', '127.0.0.1', 'localhost']
+ALLOWED_HOSTS = ['ecommerce-shopping-kart.onrender.com', '127.0.0.1', 'localhost']
 
 
 
@@ -46,6 +49,8 @@ INSTALLED_APPS = [
     'store',
     'carts',
     'orders',
+    'cloudinary',
+    'cloudinary_storage',
 ]
 
 MIDDLEWARE = [
@@ -60,6 +65,7 @@ MIDDLEWARE = [
 ]
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 ROOT_URLCONF = 'eKart.urls'
 
@@ -89,13 +95,12 @@ AUTH_USER_MODEL = 'accounts.Account'# for custom model
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
 DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-        }
-    }
-
-DATABASES["default"] = dj_database_url.parse("postgresql://postegrese_django_ekart_user:9JmDQiSwKNAKke006TnHlR7V0U5Kz63a@dpg-d30oe915pdvs73893of0-a.oregon-postgres.render.com/postegrese_django_ekart")
+    'default': dj_database_url.parse(
+        "postgresql://postegrese_django_ekart_user:9JmDQiSwKNAKke006TnHlR7V0U5Kz63a@dpg-d30oe915pdvs73893of0-a.oregon-postgres.render.com/postegrese_django_ekart",
+        conn_max_age=600,
+        ssl_require=True
+    )
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
