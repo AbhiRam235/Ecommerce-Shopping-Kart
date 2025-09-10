@@ -31,7 +31,7 @@ BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
 # SECURITY WARNING: don't run with debug turned on in production!
 
 
-ALLOWED_HOSTS = ['ecommerce-shopping-kart.onrender.com', '127.0.0.1', 'localhost']
+ALLOWED_HOSTS = ['ecommerce-shopping-kart-Izy7.onrender.com', '127.0.0.1', 'localhost']
 
 
 
@@ -153,7 +153,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 # media files configuration
 
 MEDIA_URL = '/media/'
-
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 MESSAGE_TAGS = {
     messages.ERROR : 'danger',
